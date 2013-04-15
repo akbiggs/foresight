@@ -3,6 +3,12 @@
 
 var HOST = "localhost:8888";
 
+$.ajaxSetup({
+  error: function(xhr, status, error) {
+      alert("An AJAX error occured: " + status + "\nError: " + error);
+  }
+});
+
 var posts = {
     
     /**
@@ -14,8 +20,8 @@ var posts = {
      * Get and render all posts.
      */
     getAllPosts: function() {
-        $.get("localhost:8888/posts", function(received) {
-            $.each(received, function(index, received) {
+        $.getJSON("http://localhost:8888/posts", function(received) {
+            $.each(received, function(index, post) {
                 posts.renderPost(post);
             });
         });
@@ -27,7 +33,7 @@ var posts = {
             var html = "";
 
             html += "<div class='paragraph'>";
-            html += this.renderer.makeHTML(paragraph);
+            html += posts.renderer.makeHtml(paragraph);
             html += "</div>"
 
             renderedParas.push(html);
