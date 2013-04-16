@@ -1,5 +1,4 @@
 var data = require("./data");
-var helper = require("./helper");
 var fs = require("fs");
 var $ = require("jquery");
 var Showdown = require("showdown");
@@ -9,15 +8,12 @@ var getAllPosts = function(req, res) {
     console.log("Blah");
     res.status(200);
     res.set('Content-Type', MIME_TYPES[".json"]);
-    helper.allowCrossOrigin(res);
-    res.set('Access-Control-Allow-Origin', '*');
     res.json(data.getAllPosts());
 };
 
 var getPost = function(req, res) {
     var id = req.params.id;
     res.set("Content-Type", MIME_TYPES[".json"]);
-    helper.allowCrossOrigin(res);
     res.json(data.getPost(id));
 };
 

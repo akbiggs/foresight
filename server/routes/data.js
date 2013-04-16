@@ -1,30 +1,42 @@
-posts = []
+var fs = require("fs");
+
+var IMPORT_LOCATION = "./posts/";
+var posts = []
 
 /* PUBLIC */
 
-exports.getAllPosts = function() {
+var importPosts = function() {
+    fs.readdir(IMPORT_LOCATION, function(err, files) {
+        if (err) throw err;
+        for (var i = 0; i < files.length; i++) {
+            importPost(IMPORT_LOCATION + files[i])
+        }
+    });
+};
+
+var getAllPosts = function() {
     return posts;
 };
 
-exports.getPost = function(id) {
+var getPost = function(id) {
     return (isValidPost(id) ? posts[id] : null);
 };
 
-exports.addPost = function(content) {
+var addPost = function(content) {
     var post = {}
     post.paragraphs = extractParagraphs(content);
     post.comments = new Array();
     posts.push(post);
 };
 
-exports.modifyPost = function(id, new_content) {
+var modifyPost = function(id, new_content) {
     if (isValidPost(id)) {
         var post = posts[id];
         var old_paras = post.paragraphs;
         var new_paras = extractParagraphs(new_content);
 
         // since the comment paragraph indices might be thrown off by the new
-        // changes, consolidate the changes with the current comments.
+        // changes, consolidate these changes with the current comments.
         post.paragraphs = new_paras;
         post.comments = consolidateComments(old_paras, new_paras, post.comments);
 
@@ -33,15 +45,16 @@ exports.modifyPost = function(id, new_content) {
 
     return false;
 };
-exports.getAllComments = function(post_id) {
+
+var getAllComments = function(post_id) {
     return (isValidPost(id) ? posts[post_id].comments : null);
 };
 
-exports.getComment = function(post_id, id) {
+var getComment = function(post_id, id) {
     return (isValidComment(post_id, id) ? posts[post_id].comments[id] : null);
 };
 
-exports.addComment = function(post_id, content) {
+var addComment = function(post_id, content) {
     if (isValidPost(post_id)) {
         var comment = {};
         var post = posts[post_id];
@@ -81,3 +94,21 @@ var consolidateComments = function(old_paras, new_paras, comments) {
     // TODO: Match up comments from old paragraphxs to new_paragraphs.
     return comments;
 };
+
+var importPost = function(filename) {
+    console.log("Filename: " + filename);
+    fs.readFile(filename, function(err, buf) {
+        addPost(buf.toString());
+    });
+};
+
+/* EXPORTS */
+exports.importPosts = importPosts;
+exports.getAllPosts = getAllPosts;
+exports.getPost = getPost;
+exports.addPost = addPost;
+exports.modifyPost = modifyPost;
+
+exports.getAllComments = getAllComments;
+exports.getComment = getComment;
+exports.addComment = addComment;

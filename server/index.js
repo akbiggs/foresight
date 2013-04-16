@@ -1,10 +1,12 @@
 var express = require("express");
 var posts = require("./routes/posts");
+var data = require("./routes/data");
 var comments = require("./routes/comments");
 
-//var media = require("./routes/media");
-//var read = require("./routes/read");
+// serve all the posts we want
+data.importPosts();
 
+/* Configure app details */
 var app = express();
 
 app.configure(function() {
@@ -13,9 +15,9 @@ app.configure(function() {
 });
 
 /* Allow cross-origin requests */
-app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+app.get('/*', function(req, res, next) {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 });
 
