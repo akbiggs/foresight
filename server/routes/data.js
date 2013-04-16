@@ -1,15 +1,14 @@
 var fs = require("fs");
-
-var IMPORT_LOCATION = "./posts/";
+var config = require("../config");
 var posts = []
 
 /* PUBLIC */
 
 var importPosts = function() {
-    fs.readdir(IMPORT_LOCATION, function(err, files) {
+    fs.readdir(config.post_dir, function(err, files) {
         if (err) throw err;
         for (var i = 0; i < files.length; i++) {
-            importPost(IMPORT_LOCATION + files[i])
+            importPost(config.post_dir + files[i])
         }
     });
 };
@@ -96,13 +95,13 @@ var consolidateComments = function(old_paras, new_paras, comments) {
 };
 
 var importPost = function(filename) {
-    console.log("Filename: " + filename);
     fs.readFile(filename, function(err, buf) {
         addPost(buf.toString());
     });
 };
 
 /* EXPORTS */
+
 exports.importPosts = importPosts;
 exports.getAllPosts = getAllPosts;
 exports.getPost = getPost;
