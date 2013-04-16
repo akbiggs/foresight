@@ -19,15 +19,14 @@
 
     <!-- SCRIPTS -->
     <script src="js/posts.js"></script>
+    
     <!-- CSS -->
 
 </head>
-<body>
+<body onLoad="posts.getAllPosts()">
     <div id="posts">
+        <!-- Dynamically generated content goes here. -->
     </div>
 </body>
 
-<script>
-    posts.getAllPosts();
-</script>
 </html>
