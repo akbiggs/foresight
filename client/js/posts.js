@@ -16,6 +16,11 @@ var posts = {
      */
     renderer: new Showdown.converter(),
 
+    //counts how many posts have been rendered so far so that each can be given a unique id
+    //this is just temporary, really the post ids should be tied in with the ids we are using 
+    //to store the posts in the server
+    postCounter : 0, 
+
     /**
      * Get and render all posts.
      */
@@ -32,12 +37,15 @@ var posts = {
         $.each(post.paragraphs, function(index, paragraph) {
             var html = "";
 
-            html += "<div class='paragraph'>";
+            html += "<div class='post' id='post" + posts.postCounter + "'>";
             html += posts.renderer.makeHtml(paragraph);
             html += "</div>"
 
             renderedParas.push(html);
             $("#posts").append(html);
+
+            //increment the post counter
+            posts.postCounter++;
         });
     }
 };

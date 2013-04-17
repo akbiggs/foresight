@@ -112,6 +112,8 @@ var g_list_level = 0;
 var g_lang_extensions = [];
 var g_output_modifiers = [];
 
+//Daphne's global variables
+var g_parCounter = 0;
 
 //
 // Automatic Extension Loading (node only):
@@ -150,6 +152,9 @@ this.makeHtml = function(text) {
 	g_urls = {};
 	g_titles = {};
 	g_html_blocks = [];
+
+	//reset the paragraph counter
+	g_parCounter = 0;
 
 	// attacklab: Replace ~ with ~T
 	// This lets us use tilde as an escape char to avoid md5 hashes
@@ -1214,9 +1219,10 @@ var _FormParagraphs = function(text) {
 		}
 		else if (str.search(/\S/) >= 0) {
 			str = _RunSpanGamut(str);
-			str = str.replace(/^([ \t]*)/g,"<p>");
+			str = str.replace(/^([ \t]*)/g,"<p class='par" + g_parCounter + "''>");
 			str += "</p>"
 			grafsOut.push(str);
+			g_parCounter++; //increment the paragraph id counter
 		}
 
 	}

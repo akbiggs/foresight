@@ -1,6 +1,8 @@
 var fs = require("fs");
 var config = require("../config");
 var posts = []
+var comments = []
+
 
 /* PUBLIC */
 
@@ -24,7 +26,6 @@ var getPost = function(id) {
 var addPost = function(content) {
     var post = {}
     post.paragraphs = extractParagraphs(content);
-    post.comments = new Array();
     posts.push(post);
 };
 
@@ -56,11 +57,10 @@ var getComment = function(post_id, id) {
 var addComment = function(post_id, content) {
     if (isValidPost(post_id)) {
         var comment = {};
-        var post = posts[post_id];
         
         comment.content = content;
 
-        post.comments.push(comment);
+        comments[post_id].push(comment);
     }
 }
 
