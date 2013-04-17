@@ -1,6 +1,5 @@
 var data = require("./data");
 var fs = require("fs");
-var $ = require("jquery");
 var Showdown = require("showdown");
 var MIME_TYPES = require("./types").MIME_TYPES;
 
