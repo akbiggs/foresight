@@ -38,7 +38,7 @@ var posts = {
             var html = "";
 
             html += "<div class='post' id='post" + posts.postCounter + "'>";
-            html += posts.renderer.makeHtml(paragraph);
+            html += posts.renderer.makeHtml(paragraph, posts.postCounter);
             html += "</div>"
 
             renderedParas.push(html);

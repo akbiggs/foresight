@@ -1,13 +1,13 @@
 var fs = require("fs");
 var MIME_TYPES = require("./types").MIME_TYPES;
-
+var default_res = require("./default_res");
 /**
 * Sends HTML home page to client
 **/
 var serveHome = function(request, response) {
 	//ensure this is a GET
 	if (request.method != "GET") {
-        send404("Only GET is valid.", response);
+        default_res.send404("Only GET is valid.", response);
         return;
     }
 
@@ -25,7 +25,7 @@ var serveHome = function(request, response) {
 var serveCSS = function(request, response) {
 	//ensure this is a GET
 	if (request.method != "GET") {
-        send404("Only GET is valid.", response);
+        default_res.send404("Only GET is valid.", response);
         return;
     }
 
@@ -46,7 +46,7 @@ var serveCSS = function(request, response) {
 var serveJS = function(request, response) {
 	//ensure this is a GET
 	if (request.method != "GET") {
-        send404("Only GET is valid.", response);
+        default_res.send404("Only GET is valid.", response);
         return;
     }
 
@@ -67,23 +67,13 @@ var serveJS = function(request, response) {
 function serveFile(err, data, response) {
   if (err) {
     // Overwrite the header with a 404 error.
-    send404("Resource does not exist.", response)
+    default_res.send404("Resource does not exist.", response)
   } else {
     response.write(data);
     response.end();
   }
 };
 
-/**
- * Sends an HTTP response with a 404 message.
- *
- */
-function send404(message, response) {
-  response.writeHead(404, {
-    'Content-Type': MIME_TYPES['.html']
-  });
-  response.end("404: " + message + "\n");
-}
 
 exports.serveHome = serveHome;
 exports.serveJS = serveJS;

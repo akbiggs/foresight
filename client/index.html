@@ -21,14 +21,24 @@
 
     <!-- SCRIPTS -->
     <script src="js/posts.js"></script>
-    
+    <script src="js/comments.js"></script>
     <!-- CSS -->
 
 </head>
-<body onLoad="posts.getAllPosts()">
+<body>
+    <h1>Foresight</h1>
     <div id="posts">
         <!-- Dynamically generated content goes here. -->
     </div>
 </body>
-
 </html>
+
+<script>
+window.onload = function(){
+    posts.getAllPosts();
+}
+
+$(document).on('dblclick', function(e) {
+    comments.retrieveComments(e.target["id"]);
+});
+</script>

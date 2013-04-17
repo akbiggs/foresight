@@ -113,7 +113,8 @@ var g_lang_extensions = [];
 var g_output_modifiers = [];
 
 //Daphne's global variables
-var g_parCounter = 0;
+var g_parCounter = 0;  //the counter of the number of paragraphs seen so far in this post
+var g_curPost = 0; //the index of the current post
 
 //
 // Automatic Extension Loading (node only):
@@ -137,7 +138,7 @@ if (typeof module !== 'undefind' && typeof exports !== 'undefined' && typeof req
 	}
 }
 
-this.makeHtml = function(text) {
+this.makeHtml = function(text, curPost) {
 //
 // Main function. The order in which other subs are called here is
 // essential. Link and image substitutions need to happen before
@@ -153,8 +154,9 @@ this.makeHtml = function(text) {
 	g_titles = {};
 	g_html_blocks = [];
 
-	//reset the paragraph counter
+	//reset the paragraph counter, and set the current post index
 	g_parCounter = 0;
+	g_curPost = curPost;
 
 	// attacklab: Replace ~ with ~T
 	// This lets us use tilde as an escape char to avoid md5 hashes
@@ -1218,8 +1220,10 @@ var _FormParagraphs = function(text) {
 			grafsOut.push(str);
 		}
 		else if (str.search(/\S/) >= 0) {
+			var p_id = "p_" + g_curPost + "_" + g_parCounter;
+
 			str = _RunSpanGamut(str);
-			str = str.replace(/^([ \t]*)/g,"<p class='par" + g_parCounter + "''>");
+			str = str.replace(/^([ \t]*)/g,"<p class='parag' id='" + p_id + "''>");
 			str += "</p>"
 			grafsOut.push(str);
 			g_parCounter++; //increment the paragraph id counter

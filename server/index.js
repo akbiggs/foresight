@@ -30,8 +30,7 @@ app.put("/post/:id", posts.modifyPost);
 app.delete("/post/:id", posts.removePost);
 
 /* COMMENTS */
-app.get("/post/comment", comments.getAllComments);
-app.get("/post/comment/:id", comments.getComment);
+app.get("/post/comments/", comments.getComments);
 app.post("/post/comment", comments.addComment);
 app.put("/post/comment/:id", comments.modifyComment);
 app.delete("/post/comment/:id", comments.removeComment);

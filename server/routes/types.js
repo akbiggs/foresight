@@ -6,3 +6,4 @@ exports.MIME_TYPES = {
         '.json': 'application/json',
         '.ico' : 'image/vnd.microsoft.icon'
 };
+

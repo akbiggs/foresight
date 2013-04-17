@@ -37,5 +37,35 @@ var comments = {
         return "<p class='content'>" + comment.content + "</p>";
     },
 
-    render
+    /**
+    * Given the paragraph id that was clicked on, retrieve the 
+    * relevent comments from the server.
+    *
+    * id comes in the form p_xx_yy where xx is the post index and
+    * yy is the paragraph index within that post
+    **/
+    retrieveComments: function(id) {
+        console.log(id);
+
+        //make sure id is actually for a paragraph before going on
+        if (id == undefined || id.indexOf("p_") != 0) {
+            return;
+        }
+
+        //get the individual elements from the id
+        var id_values = id.split("_");
+        var post = id_values[1];
+        var par = id_values[2];
+
+        var url = "/post/comments?post=" + post + "&par=" + par;
+        
+        $.ajax({
+          type: 'GET',
+          dataType: "json",
+          url: url,
+          success: function(data) {
+            //uhh do something with the comments data we should supposedly be getting back
+          }
+        });
+    }
 };
